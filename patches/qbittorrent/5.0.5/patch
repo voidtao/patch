@@ -1,0 +1,29 @@
+--- qBittorrent-release-5.0.5/src/base/bittorrent/sessionimpl.cpp	2025-04-13 07:55:32.000000000 +0000
++++ sessionimpl.cpp	2025-05-16 07:40:01.275117362 +0000
+@@ -403,7 +403,7 @@
+     , m_IPFilterFile(BITTORRENT_SESSION_KEY(u"IPFilter"_s))
+     , m_announceToAllTrackers(BITTORRENT_SESSION_KEY(u"AnnounceToAllTrackers"_s), false)
+     , m_announceToAllTiers(BITTORRENT_SESSION_KEY(u"AnnounceToAllTiers"_s), true)
+-    , m_asyncIOThreads(BITTORRENT_SESSION_KEY(u"AsyncIOThreadsCount"_s), 10)
++    , m_asyncIOThreads(BITTORRENT_SESSION_KEY(u"AsyncIOThreadsCount"_s), 4)
+     , m_hashingThreads(BITTORRENT_SESSION_KEY(u"HashingThreadsCount"_s), 1)
+     , m_filePoolSize(BITTORRENT_SESSION_KEY(u"FilePoolSize"_s), 100)
+     , m_checkingMemUsage(BITTORRENT_SESSION_KEY(u"CheckingMemUsageSize"_s), 32)
+@@ -1792,7 +1792,7 @@
+ 
+     // The most secure, rc4 only so that all streams are encrypted
+     settingsPack.set_int(lt::settings_pack::allowed_enc_level, lt::settings_pack::pe_rc4);
+-    settingsPack.set_bool(lt::settings_pack::prefer_rc4, true);
++    settingsPack.set_bool(lt::settings_pack::prefer_rc4, false);
+     switch (encryption())
+     {
+     case 0: // Enabled
+@@ -1997,7 +1997,7 @@
+         settingsPack.set_bool(lt::settings_pack::enable_incoming_tcp, true);
+         settingsPack.set_bool(lt::settings_pack::enable_outgoing_tcp, true);
+         settingsPack.set_bool(lt::settings_pack::enable_incoming_utp, true);
+-        settingsPack.set_bool(lt::settings_pack::enable_outgoing_utp, true);
++        settingsPack.set_bool(lt::settings_pack::enable_outgoing_utp, false);
+         break;
+ 
+     case BTProtocol::TCP:
